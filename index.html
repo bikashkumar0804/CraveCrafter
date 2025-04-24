@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CraveCrafter - Home</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        .hero-bg {
+            background-image: url('https://img.freepik.com/free-photo/top-view-table-full-food_23-2149209253.jpg?semt=ais_hybrid&w=740');
+            background-size: cover;
+            background-position: center;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+
+    <!-- Navigation -->
+    <nav class="bg-white shadow-lg">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="flex justify-between">
+                <div class="flex space-x-7">
+                    <div>
+                        <a href="#" class="flex items-center py-4 px-2">
+                            <span class="font-semibold text-gray-500 text-lg">CraveCrafter</span>
+                        </a>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-3">
+                    <span id="user-name" class="text-gray-500 font-medium"></span>
+                    <a href="my-orders.html" id="view-orders-btn" class="py-2 px-4 bg-blue-500 text-white rounded hover:bg-blue-600 transition duration-300 hidden">View My Orders</a>
+                    <button id="logout-btn" class="py-2 px-4 bg-red-500 text-white rounded hover:bg-red-600 transition duration-300">Logout</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <div class="hero-bg h-screen flex items-center">
+        <div class="max-w-2xl mx-auto text-center bg-white bg-opacity-90 p-10 rounded-lg">
+            <h1 class="text-4xl font-bold text-gray-800 mb-6">Crave Something Special?</h1>
+            <p class="text-xl text-gray-600 mb-8">Connect with local cooks who can make your dream dish a reality</p>
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <a href="book.html" class="px-6 py-3 bg-green-500 text-white font-medium rounded-lg hover:bg-green-600 transition duration-300">Post a Request</a>
+                <a href="admin.html" class="px-6 py-3 bg-gray-800 text-white font-medium rounded-lg hover:bg-gray-700 transition duration-300">I'm a Provider</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Check if user is logged in
+        document.addEventListener('DOMContentLoaded', function () {
+            const userName = localStorage.getItem('username');
+            const userEmail = localStorage.getItem('userEmail');
+            
+            if (userName) {
+                document.getElementById('user-name').innerText = `Welcome, ${userName}!`;
+                document.getElementById('view-orders-btn').classList.remove('hidden');
+            } else {
+                window.location.href = 'login.html';
+            }
+    
+            // Logout with confirmation
+            document.getElementById('logout-btn').addEventListener('click', function () {
+                const confirmLogout = confirm("Are you sure you want to logout?");
+                if (confirmLogout) {
+                    localStorage.removeItem('userEmail');
+                    localStorage.removeItem('username');
+                    window.location.href = 'login.html';
+                }
+            });
+        });
+    </script>
+    
+
+</body>
+</html>

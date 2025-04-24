@@ -1,0 +1,15 @@
+{
+  "adminCredentials": {
+    "username": "admin",
+    "password": "123"
+  },
+  "bookings": [],
+  "users": [
+    {
+      "id": "266e",
+      "username": "Rahul",
+      "email": "abc@gmail.com",
+      "password": "12345"
+    }
+  ]
+}

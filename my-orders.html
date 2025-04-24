@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>My Orders</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #fafafa;
+      padding: 20px;
+    }
+
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+
+    .orders-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+      margin-top: 30px;
+    }
+
+    .order-card {
+      background: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      border: 1px solid #ddd;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .order-card h3 {
+      margin-top: 0;
+      color: #007BFF;
+    }
+
+    .order-card p {
+      margin: 5px 0;
+      font-size: 14px;
+    }
+
+    .no-orders {
+      text-align: center;
+      color: gray;
+      font-size: 18px;
+      margin-top: 50px;
+    }
+
+    .back-link {
+      display: block;
+      margin: 15px auto 0;
+      text-align: center;
+      color: #007BFF;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .back-link:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>My Orders</h1>
+  <div class="orders-container" id="ordersContainer"></div>
+  <p id="noOrdersMsg" class="no-orders" style="display: none;">You haven’t placed any orders yet.</p>
+  <a href="index.html" class="back-link">← Back to Home</a>
+
+  <script>
+    const userEmail = localStorage.getItem('userEmail');
+
+    if (!userEmail) {
+      alert("You are not logged in. Redirecting to login...");
+      window.location.href = "login.html";
+    }
+
+    fetch('http://localhost:3000/bookings')
+      .then(response => response.json())
+      .then(bookings => {
+        const myOrders = bookings.filter(order => order.email === userEmail);
+        const container = document.getElementById('ordersContainer');
+        const noOrdersMsg = document.getElementById('noOrdersMsg');
+
+        if (myOrders.length === 0) {
+          noOrdersMsg.style.display = 'block';
+          return;
+        }
+
+        myOrders.forEach(order => {
+          const card = document.createElement('div');
+          card.className = 'order-card';
+          card.innerHTML = `
+            <h3>${order.dishName}</h3>
+            <p><strong>Budget:</strong> ₹${order.budget}</p>
+            <p><strong>Quantity:</strong> ${order.quantity}</p>
+            <p><strong>Delivery Method:</strong> ${order.deliveryMethod}</p>
+            <p><strong>Special Instructions:</strong> ${order.specialInstructions || "None"}</p>
+          `;
+          container.appendChild(card);
+        });
+      })
+      .catch(err => {
+        console.error('Error fetching orders:', err);
+        alert("Could not load your orders. Try again later.");
+      });
+  </script>
+
+</body>
+</html>
