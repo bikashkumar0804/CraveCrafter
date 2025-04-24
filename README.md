@@ -43,3 +43,7 @@ How to Use
 3. Run mock REST API server
 >>>npx json-server --watch db.json --port 3000
 
+4. Admin Login
+   username- admin
+   password- 123
+
